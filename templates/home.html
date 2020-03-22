@@ -32,17 +32,12 @@
 			<p class="w3-small"><i class="fa fa-bell"></i>Notifications</p>
 			<div class="w3-col m3">
 			{%for notification in notifications%}
+						{% if notification.engineer_id == user.id%}
 						<div class="w3-card w3-round w3-white">
 							<div class="w3-container">
 								<div class="row">
 									<h6 class="w3-left">
-										To: 
-											{% if notification.engineer_id == user.id%}
-												 "Me"
-											{%elif notification.engineer_id == 0%}
-												"Everyone"
-											{%endif%}
-									
+										To:"Me"
 									</h6>
 									<h6 class="w3-right">{{notification.notification_date}} {{notification.notification_time }}</h6>
 								</div>
@@ -51,6 +46,21 @@
 								{{notification.notification_text}}
 							</div>
 						</div>
+						{%elif notification.engineer_id == 0%}
+						<div class="w3-card w3-round w3-white">
+							<div class="w3-container">
+								<div class="row">
+									<h6 class="w3-left">
+										To:"Everyone"
+									</h6>
+									<h6 class="w3-right">{{notification.notification_date}} {{notification.notification_time }}</h6>
+								</div>
+							</div>
+							<div class="w3-padding">
+								{{notification.notification_text}}
+							</div>
+						</div>					
+						{%endif%}		
 						<br>
 						
 				{%endfor%}

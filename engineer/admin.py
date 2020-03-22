@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import path
 from .models import activity_tracker,equipment,Service,notification,Department
 from django.contrib import messages
@@ -29,7 +29,7 @@ class MyAdminSite(AdminSite):
              path('add_equipment/',self.admin_view(self.add_equipment),name="add_equipment"),
              path('add_engineer/',self.admin_view(self.add_engineer),name="add_engineer"),
              path('engineer/<int:id>',self.admin_view(self.update_engineer),name="update_engineer"),
-             path('delete/<int:id>',self.admin_view(self.update_engineer),name="delete_engineer"),
+             path('delete/<int:id>',self.admin_view(self.delete_engineer),name="delete_engineer"),
              path('downloadqrcode/<int:id>',self.admin_view(self.qrcode),name="downloadqrcode")       
         
         ]
@@ -156,7 +156,7 @@ class MyAdminSite(AdminSite):
         color = 'rgb(0, 0, 0)'
         draw.text((x, y), message, fill=color, font=font)
         image.save('test.png')
-        with open('C:\\Users\\admin\\iMaintain\\test.png','rb') as f:
+        with open('C:\\Users\\admin\\iMaintain\\static\\images\\test.png','rb') as f:
             if f:
                 response = HttpResponse(f.read(), content_type='image/force-download')
                 filename = "Qrcode_%s.jpg" %(id)
@@ -168,7 +168,10 @@ class MyAdminSite(AdminSite):
                 return response
             return HttpResponse("Not found")
 
-
+    def delete_engineer(self,request,id):
+        u = User.objects.get(id=id)
+        u.delete()
+        return HttpResponse("Deleted")
 
         
 

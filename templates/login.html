@@ -161,11 +161,11 @@
        <form method="POST">
         {% csrf_token %}
         <div class="group">
-          <input type="text" placeholder='Engineer User' name="eng_username">
+          <input type="text" placeholder='Engineer User' name="eng_username" required>
               <i class="fa fa-user-circle" ></i>
         </div>
         <div class="group">
-          <input type="Password" placeholder="Password" name="eng_pass">
+          <input type="Password" placeholder="Password" name="eng_pass" required>
               <i class="fa fa-user-secret"></i>
         </div>    
         <button type="submit"> <i class="fa fa-send"></i> Login </button>

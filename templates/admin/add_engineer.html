@@ -100,7 +100,7 @@
 								<td>{{i.username}}</td>
 		  						<td>
 									<a href="/admin/engineer/{{i.id}}"><button  class="btn btn-primary">Edit</button></a>
-									<button  class="btn btn-danger">Delete</button>
+									<button  onclick="deleteEng({{i.id}})"class="btn btn-danger">Delete</button>
 								</td>
 							</tr>
 						{%endfor%}
@@ -233,16 +233,15 @@
 				confirmButtonColor: '#f5365b'
 			}).then(function(result) {
 				if(result.value) {
-					$('#eng_'+id).remove()
 					$.ajax({
-						url: base_url + 'supervisor/deleteEngineer',
-						type: "POST",
-						data: "eng_id="+id,
+						url: base_url + 'admin/delete/'+id,
+						type: "GET",
 						success: function() {
 							Swal.fire({
 								type: 'success',
 								title: 'Engineer Deleted'
 							})
+							$('#eng_'+id).remove()
 						},
 						error: function() {
 							Swal.fire({
