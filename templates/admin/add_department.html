@@ -34,7 +34,8 @@
 		                            <div class="form-group">
 		                              <label class="form-control-label" for="department">Department Name</label>
 		                              <input type="text" name="dept_name" id="department" class="form-control form-control-alternative" placeholder="Enter name" required>
-		                            </div>
+									  <input type="hidden" name="dept_id" value="0">
+									</div>
 		                          </div>
 		                        </div>
 		                      </div>
@@ -78,7 +79,7 @@
 				<tbody>
 
 					{% for departments in department %}
-					    <tr>
+					    <tr id="eng_{{departments.id}}">
 							<th scope="row">
 							  <div class="media align-items-center">
 								<div class="media-body">
@@ -86,9 +87,10 @@
 								</div>
 							  </div>
 							</th>
-							<td class="text-right">
-							  <div class="col text-right">
-								<button onclick="openEditModal({{departments.id}}, '{{departments.department_name}}')" class="btn btn-md btn-primary">Edit</button>
+							<td>
+							  <div>
+								<button onclick="openEditModal({{departments.id}}, '{{departments.department_name}}')" class="btn btn-md btn-primary ">Edit</button>
+								<button  onclick="deleteDep({{departments.id}})"class="btn btn-danger">Delete</button>
 							  </div>
 							</td>
 						</tr>
@@ -139,6 +141,37 @@
 			$('#dept_name').val(name)
 			$('#dept_id').val(id)
 			$('#update_modal').modal('show')
+		}
+
+		function deleteDep(id) {
+			Swal.fire({
+				type: 'warning',
+				title: 'Do you really wanna delete the Department?',
+				text: 'It is irreversible',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, delete',
+				confirmButtonColor: '#f5365b'
+			}).then(function(result) {
+				if(result.value) {
+					$.ajax({
+						url: base_url + 'admin/delete_dep/'+id,
+						type: "GET",
+						success: function() {
+							Swal.fire({
+								type: 'success',
+								title: 'Department Deleted'
+							})
+							$('#eng_'+id).remove()
+						},
+						error: function() {
+							Swal.fire({
+								type: 'error',
+								title: 'There was some error!'
+							})
+						}
+					})
+				}
+			})
 		}
 	</script>
 </body>
