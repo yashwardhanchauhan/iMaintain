@@ -1,3 +1,4 @@
+origin=window.location.origin;
 var Toast
 $(function() {
 	Toast = Swal.mixin({
@@ -78,7 +79,7 @@ function qr() {
 					type: 'success',
 					title: "Loading right away..."
 				})
-				window.location.href = 'http://127.0.0.1:8000/equipments/'+qr_data.split('airport_')[1];
+				window.location.href = origin+'/equipments/'+qr_data.split('airport_')[1];
 			} else {
 				Toast.fire({
 					type: 'error',
@@ -95,5 +96,5 @@ function moveNow() {
 		$('#equipment-id').focus()
 		return
 	}
-	window.location.href ='http://127.0.0.1:8000/equipments/' + $('#equipment-id').val()
+	window.location.href =origin+'/equipments/' + $('#equipment-id').val()
 }
