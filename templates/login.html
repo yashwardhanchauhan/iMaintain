@@ -179,6 +179,14 @@
     </script> -->
 
     <script type="text/javascript" src="{% static 'js/login.js' %}"></script> 
+    <script >
+      if("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./pwabuilder-sw.js", {
+            scope: "/"
+        
+        });
+      }
+    </script>
 
 </body>
 </html>

@@ -50,7 +50,7 @@ class MyAdminSite(AdminSite):
             
         department=Department.objects.all()
         engineer=User.objects.filter(is_staff=False)
-        service=Service.objects.raw('''SELECT engineer_service.id as service_id,auth_user.username,engineer_service.service_date,engineer_equipment.id,engineer_equipment.equipment_name FROM engineer_service
+        service=Service.objects.raw('''SELECT engineer_service.equipment_id,engineer_service.service_status, engineer_service.id as service_id,auth_user.username,engineer_service.service_date,engineer_equipment.id,engineer_equipment.equipment_name FROM engineer_service
         JOIN auth_user ON auth_user.id=engineer_service.equipment_id
         JOIN engineer_equipment ON engineer_equipment.id=engineer_service.equipment_id
         ORDER BY engineer_service.id DESC
@@ -145,7 +145,8 @@ class MyAdminSite(AdminSite):
 
     def qrcode(self,request,id):
         qr=qrcode.QRCode(version=1,box_size=15,border=10)
-        data='airport_'+str(id)
+        value=str(id)
+        data='airport_'+value
         qr.add_data(data)
         qr.make(fit=True)
         img=qr.make_image(fill='black',back_color='white')
@@ -157,7 +158,7 @@ class MyAdminSite(AdminSite):
         message = "Id :"+data
         color = 'rgb(0, 0, 0)'
         draw.text((x, y), message, fill=color, font=font)
-        image.save('test.png')
+        image.save('C:\\Users\\admin\\iMaintain\\static\\images\\test.png')
         with open('C:\\Users\\admin\\iMaintain\\static\\images\\test.png','rb') as f:
             if f:
                 response = HttpResponse(f.read(), content_type='image/force-download')

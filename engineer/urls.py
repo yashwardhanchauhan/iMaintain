@@ -9,5 +9,6 @@ urlpatterns=[
     path('history/<int:id>',views.history,name='history'),
     path('activity',views.activity,name='activity'),
     path('home',views.home,name='home'),
+    path('pwabuilder-sw.js',views.serviceworker,name='service-worker.js'),
     path('downloadsinglereport/<int:id>',views.downloadsinglereport,name='downloadsinglereport')
 ]

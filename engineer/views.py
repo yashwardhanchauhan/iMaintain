@@ -162,4 +162,7 @@ def downloadsinglereport(request,id):
         return response
     return HttpResponse("Not found")
 
+def serviceworker(request):
+    return render(request,'pwabuilder-sw.js',content_type="application/javascript")
+
 
