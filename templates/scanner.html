@@ -13,8 +13,11 @@
 		}
 
 		video {
-			height: 100%;
-    		width: 100%;
+			position: relative;
+			top: auto;
+			left: 12.9%;
+			height: 75%;
+    		width: 75%;
 		}
 
 		.s3-card {
@@ -27,10 +30,12 @@
 
 		#monitor .scan
 		{
-		  width:100%;
+		  position: relative;
+		  left: 12.8%;
+		  width:75%;
 		  height:10px;
-		  margin-top: 250px;
-		  background-color:#009687c9;
+		  margin-top: 180px;
+		  background-color:#009669d8;
 		  position:absolute;
 		  z-index:9999;
 		  -moz-animation: scan 2s infinite;
@@ -50,13 +55,6 @@
 			transform: translateY(240px);
 		  }
 		}
-
-
-
-
-
-
-
 		
 	</style>
 
@@ -78,7 +76,7 @@
 	<div id="monitor">
 		<div class="scan"></div>
 		<canvas id="canvas" hidden></canvas>
-		<form method="POST" action="/equipments">
+		<form method="POST" action="equipments">
 			{%csrf_token%}
 			<div class="w3-center " style="margin-top:25px;">
 				<div class="w3-container s3-card w3-round-xlarge">
@@ -90,6 +88,7 @@
 			</div>
 		</form>
 		<div id="loadingMessage" style="visibility: hidden;"></div>
+		<br>
 		<video id="video" autoplay></video>
 	</div>
 	<div class="w3-bottom w3-theme-d5 main-footer" style="z-index: -1"></div>

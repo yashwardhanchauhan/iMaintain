@@ -84,17 +84,16 @@ def equipments(request,id):
                                 where engineer_service.equipment_id=%s
                                 ORDER BY engineer_service.id DESC LIMIT 3
                                  '''%id)
-            # s=Service.objects.raw('''SELECT engineer_service.id as service_id,auth_user.username,engineer_service.service_date,engineer_equipment.id,engineer_equipment.equipment_name,auth_user.id as user_id FROM engineer_service
-            # JOIN auth_user ON auth_user.id=engineer_service.equipment_id
-            # JOIN engineer_equipment ON engineer_equipment.id=engineer_service.equipment_id
-            # ORDER BY engineer_service.id 
-            # ''')
+            
             ran=randint(1,6)
+            dep_id=equipment.objects.get(id=id).department_id
+            dep_name=Department.objects.get(id=dep_id).department_name
             context={
                 'i':id,
                 'e':e,
                 'ran':ran,
-                'services':s
+                'services':s,
+                'dep_name':dep_name
             }
             check=request.session.get('check')
             if check:
@@ -113,7 +112,7 @@ def equipments(request,id):
 @login_required
 def scanner(request):
     request.session['check']=1
-    return render(request,'scanner.html')
+    return render(request,'scanner1.html')
 
 
 @login_required
@@ -123,11 +122,7 @@ def history(request,id):
                                 where engineer_service.equipment_id=%s
                                 ORDER BY engineer_service.id DESC 
                                  '''%id)
-    # s=Service.objects.raw('''SELECT engineer_service.id as service_id,auth_user.username,engineer_service.service_date,engineer_equipment.id,engineer_equipment.equipment_name,auth_user.id as user_id FROM engineer_service
-    #     JOIN auth_user ON auth_user.id=engineer_service.equipment_id
-    #     JOIN engineer_equipment ON engineer_equipment.id=engineer_service.equipment_id
-    #     ORDER BY engineer_service.id DESC 
-    #     ''')
+    
     context={
         'services':s
     }
@@ -164,5 +159,8 @@ def downloadsinglereport(request,id):
 
 def serviceworker(request):
     return render(request,'pwabuilder-sw.js',content_type="application/javascript")
+
+def offline(request):
+    return render(request,'offline.html')
 
 
