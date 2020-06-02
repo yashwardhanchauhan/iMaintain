@@ -112,7 +112,7 @@ def equipments(request,id):
 @login_required
 def scanner(request):
     request.session['check']=1
-    return render(request,'scanner1.html')
+    return render(request,'scanner.html')
 
 
 @login_required

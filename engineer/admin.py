@@ -45,23 +45,26 @@ class MyAdminSite(AdminSite):
             n=notification(engineer_id=engid,notification_text=noti,notification_date=ndate,notification_time=ntime)
             n.save()
             #messages.info(request,'Notification Send Successfully')
-
-
             
         department=Department.objects.all()
         engineer=User.objects.filter(is_staff=False)
-        service=Service.objects.raw('''SELECT engineer_service.equipment_id,engineer_service.service_status, engineer_service.id as service_id,auth_user.username,engineer_service.service_date,engineer_equipment.id,engineer_equipment.equipment_name FROM engineer_service
-        JOIN auth_user ON auth_user.id=engineer_service.equipment_id
+        service=Service.objects.raw('''SELECT auth_user.id,engineer_service.id as service_id ,auth_user.username,engineer_service.service_date,engineer_service.service_status,engineer_service.equipment_id,engineer_equipment.equipment_name FROM engineer_service
+        JOIN auth_user ON auth_user.id=engineer_service.user_id
         JOIN engineer_equipment ON engineer_equipment.id=engineer_service.equipment_id
-        ORDER BY engineer_service.id DESC
         ''')
-
+        # print(len(service))
+        # service=Service.objects.raw('''SELECT engineer_service.equipment_id,engineer_service.service_status, engineer_service.id as service_id,auth_user.username,engineer_service.service_date,engineer_equipment.id,engineer_equipment.equipment_name FROM engineer_service
+        # JOIN auth_user ON auth_user.id=engineer_service.equipment_id
+        # JOIN engineer_equipment ON engineer_equipment.id=engineer_service.equipment_id
+        # ORDER BY engineer_service.id DESC
+        # ''')
         equip=equipment.objects.all()
         noti=notification.objects.raw('''
         SELECT * FROM engineer_notification Join auth_user on auth_user.id=engineer_notification.id
         order by engineer_notification.id DESC
         ''')
-        activity=activity_tracker.objects.all().order_by('-id')[:5]
+        
+        activity=activity_tracker.objects.all().order_by('-id')[:3]
         context={
             'department':department,
             'engineer':engineer,
